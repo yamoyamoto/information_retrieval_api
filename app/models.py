@@ -49,6 +49,5 @@ class MecabSentence:
         return sorted(self.mecabWords, key=lambda x: x.count, reverse=True)
 
     def filter(self, wordClasses: array):
-        self.mecabWords = filter(
+        return filter(
             lambda x: x.mecabWord.wordClass in wordClasses, self.mecabWords)
-        return self.mecabWords
