@@ -1,9 +1,10 @@
 from array import array
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import MeCab
 from pydantic import BaseModel
 
-from models import MecabWord, MecabSentence
+from models import Morpheme, MecabSentence
 
 
 class Query(BaseModel):
@@ -13,6 +14,14 @@ class Query(BaseModel):
 
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.post("/")
@@ -30,7 +39,7 @@ def root(query: Query):
     while node:
         if node.surface != "":
             wakati.append(node.surface)
-            mecabWord = MecabWord(node.surface)
+            mecabWord = Morpheme(node.surface)
             mecabWord.parseFeatureString(node.feature)
             mecabSentence.add(mecabWord)
         node = node.next
@@ -40,4 +49,4 @@ def root(query: Query):
 
     mecabWords = mecabSentence.sortByWordCount()
 
-    return {"message": "Hello World!", "mecabWords": mecabWords, "surfaces": wakati}
+    return {"message": "Hello World!", "morphemes": mecabWords, "surfaces": wakati}
