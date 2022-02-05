@@ -21,8 +21,7 @@ def root(query: Query):
     text = reqBody["text"]
     print(reqBody)
     useFilter = reqBody["use_word_class_filter"]
-    wordClasses = reqBody["word_classes"] if (
-        "word_classes" in reqBody) else []
+    wordClasses = reqBody["word_classes"]
 
     mecab = MeCab.Tagger()
     node = mecab.parseToNode(text)
