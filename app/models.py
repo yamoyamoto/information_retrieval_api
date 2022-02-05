@@ -2,7 +2,7 @@ from array import array
 # "-d /usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd"
 
 
-class MecabWord:
+class Morpheme:
     featureString: str
     surface: str
     wordClass: str
@@ -16,12 +16,12 @@ class MecabWord:
         self.wordClass = arr[1]
 
 
-class MecabWordWithCounter:
-    mecabWord: MecabWord
+class MorphemeWithCounter:
+    morpheme: Morpheme
     count: int
 
-    def __init__(self, mecabWord: MecabWord) -> None:
-        self.mecabWord = mecabWord
+    def __init__(self, morpheme: Morpheme) -> None:
+        self.morpheme = morpheme
         self.count = 1
 
     def countUp(self):
@@ -29,25 +29,25 @@ class MecabWordWithCounter:
 
 
 class MecabSentence:
-    mecabWords: array = []
+    morphemes: array = []
     wakati: str = ""
 
     def __init__(self) -> None:
-        self.mecabWords = []
+        self.morphemes = []
 
-    def add(self, newMecabWord: MecabWord) -> None:
+    def add(self, newMorpheme: Morpheme) -> None:
         flag = False
-        for word in self.mecabWords:
-            if word.mecabWord.surface == newMecabWord.surface and word.mecabWord.wordClass == newMecabWord.wordClass:
+        for word in self.morphemes:
+            if word.morpheme.surface == newMorpheme.surface and word.morpheme.wordClass == newMorpheme.wordClass:
                 word.countUp()
                 flag = True
         if not flag:
-            self.mecabWords.append(MecabWordWithCounter(newMecabWord))
-            self.wakati += newMecabWord.surface
+            self.morphemes.append(MorphemeWithCounter(newMorpheme))
+            self.wakati += newMorpheme.surface
 
     def sortByWordCount(self):
-        return sorted(self.mecabWords, key=lambda x: x.count, reverse=True)
+        return sorted(self.morphemes, key=lambda x: x.count, reverse=True)
 
     def filter(self, wordClasses: array):
         return filter(
-            lambda x: x.mecabWord.wordClass in wordClasses, self.mecabWords)
+            lambda x: x.morpheme.wordClass in wordClasses, self.morphemes)
