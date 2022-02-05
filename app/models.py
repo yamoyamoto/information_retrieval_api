@@ -11,6 +11,7 @@ class MecabWord:
         self.surface = surface
 
     def parseFeatureString(self, payload: str):
+        # self.featureString = payload
         arr = payload.split(",")
         self.wordClass = arr[1]
 
@@ -44,3 +45,8 @@ class MecabWordWrapper:
 
     def sort(self):
         return sorted(self.mecabWords, key=lambda x: x.count, reverse=True)
+
+    def filter(self, wordClasses: array):
+        self.mecabWords = filter(
+            lambda x: x.mecabWord.wordClass in wordClasses, self.mecabWords)
+        return self.mecabWords

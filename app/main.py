@@ -1,3 +1,4 @@
+from array import array
 from fastapi import FastAPI
 import MeCab
 from pydantic import BaseModel
@@ -7,6 +8,8 @@ from models import MecabWord, MecabWordWrapper
 
 class Query(BaseModel):
     text: str = None
+    use_word_class_filter: bool = False
+    word_classes = []
 
 
 app = FastAPI()
@@ -16,7 +19,8 @@ app = FastAPI()
 def root(query: Query):
     reqBody = query.dict()
     text = reqBody["text"]
-    useFilter = "use_filter" in reqBody
+    print(reqBody)
+    useFilter = reqBody["use_word_class_filter"]
     wordClasses = reqBody["word_classes"] if (
         "word_classes" in reqBody) else []
 
@@ -29,6 +33,9 @@ def root(query: Query):
         mecabWord.parseFeatureString(node.feature)
         mecabWordCounter.add(mecabWord)
         node = node.next
+
+    if useFilter:
+        mecabWordCounter.filter(wordClasses)
 
     mecabWords = mecabWordCounter.sort()
 
