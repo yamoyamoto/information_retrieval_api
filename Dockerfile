@@ -13,4 +13,4 @@ RUN python -m pip install mecab-python3 unidic-lite
 COPY ./app /app/app
 WORKDIR /app/app
 
-CMD uvicorn main:app --host 0.0.0.0 --port $PORT
+CMD uvicorn main:app --host 0.0.0.0 --port $PORT --reload
