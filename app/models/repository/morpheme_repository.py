@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import sessionmaker
 
-from app.models.entity.morpheme import Morpheme
+from app.models.entity.Morpheme import Morpheme
 
 engine = sqlalchemy.create_engine('sqlite:////app/ir_db.db', echo=True)
 Base = declarative_base()
