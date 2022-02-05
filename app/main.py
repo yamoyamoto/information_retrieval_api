@@ -19,7 +19,6 @@ app = FastAPI()
 def root(query: Query):
     reqBody = query.dict()
     text = reqBody["text"]
-    print(reqBody)
     useFilter = reqBody["use_word_class_filter"]
     wordClasses = reqBody["word_classes"]
 
