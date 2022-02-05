@@ -8,7 +8,7 @@ RUN apt-get update && \
 #   cd mecab-ipadic-neologd && \
 #   bin/install-mecab-ipadic-neologd -y
 
-RUN python -m pip install mecab-python3 unidic-lite
+RUN python -m pip install mecab-python3 ipadic
 
 COPY ./app /app/app
 WORKDIR /app/app

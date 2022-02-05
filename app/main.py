@@ -2,6 +2,7 @@ from array import array
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import MeCab
+import ipadic
 from pydantic import BaseModel
 
 from models import Morpheme, MecabSentence
@@ -31,7 +32,7 @@ def root(query: Query):
     useFilter = reqBody["use_word_class_filter"]
     wordClasses = reqBody["word_classes"]
 
-    mecab = MeCab.Tagger()
+    mecab = MeCab.Tagger(ipadic.MECAB_ARGS)
     node = mecab.parseToNode(text)
 
     wakati = []
