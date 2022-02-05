@@ -46,7 +46,7 @@ def root(query: Query):
         node = node.next
 
     if useFilter:
-        mecabSentence.filter(wordClasses)
+        mecabSentence.filterByWordClasses(wordClasses)
 
     mecabWords = mecabSentence.sortByWordCount()
 

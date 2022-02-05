@@ -48,6 +48,6 @@ class MecabSentence:
     def sortByWordCount(self):
         return sorted(self.morphemes, key=lambda x: x.count, reverse=True)
 
-    def filter(self, wordClasses: array):
-        return filter(
+    def filterByWordClasses(self, wordClasses: array):
+        self.morphemes = filter(
             lambda x: x.morpheme.wordClass in wordClasses, self.morphemes)
