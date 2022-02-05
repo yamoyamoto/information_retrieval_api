@@ -11,7 +11,7 @@ class Morpheme:
         self.surface = surface
 
     def parseFeatureString(self, payload: str):
-        # self.featureString = payload
+        self.featureString = payload
         arr = payload.split(",")
         self.wordClass = arr[1]
 
