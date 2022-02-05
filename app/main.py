@@ -15,8 +15,13 @@ app = FastAPI()
 @app.post("/")
 def root(query: Query):
     reqBody = query.dict()
+    text = reqBody["text"]
+    useFilter = "use_filter" in reqBody
+    wordClasses = reqBody["word_classes"] if (
+        "word_classes" in reqBody) else []
+
     mecab = MeCab.Tagger()
-    node = mecab.parseToNode(reqBody["text"])
+    node = mecab.parseToNode(text)
 
     mecabWordCounter = MecabWordWrapper()
     while node:
