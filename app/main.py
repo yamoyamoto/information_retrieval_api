@@ -25,11 +25,14 @@ def root(query: Query):
     mecab = MeCab.Tagger()
     node = mecab.parseToNode(text)
 
+    wakati = []
     mecabWordCounter = MecabWordWrapper()
     while node:
-        mecabWord = MecabWord(node.surface)
-        mecabWord.parseFeatureString(node.feature)
-        mecabWordCounter.add(mecabWord)
+        if node.surface != "":
+            wakati.append(node.surface)
+            mecabWord = MecabWord(node.surface)
+            mecabWord.parseFeatureString(node.feature)
+            mecabWordCounter.add(mecabWord)
         node = node.next
 
     if useFilter:
@@ -37,4 +40,4 @@ def root(query: Query):
 
     mecabWords = mecabWordCounter.sort()
 
-    return {"message": "Hello World!", "mecabWords": mecabWords}
+    return {"message": "Hello World!", "mecabWords": mecabWords, "surfaces": wakati}

@@ -30,6 +30,7 @@ class MecabWordWithCounter:
 
 class MecabWordWrapper:
     mecabWords: array = []
+    wakati: str = ""
 
     def __init__(self) -> None:
         self.mecabWords = []
@@ -42,6 +43,7 @@ class MecabWordWrapper:
                 flag = True
         if not flag:
             self.mecabWords.append(MecabWordWithCounter(newMecabWord))
+            self.wakati += newMecabWord.surface
 
     def sort(self):
         return sorted(self.mecabWords, key=lambda x: x.count, reverse=True)
