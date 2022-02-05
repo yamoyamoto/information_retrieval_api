@@ -3,7 +3,7 @@ from fastapi import FastAPI
 import MeCab
 from pydantic import BaseModel
 
-from models import MecabWord, MecabWordWrapper
+from models import MecabWord, MecabSentence
 
 
 class Query(BaseModel):
@@ -26,18 +26,18 @@ def root(query: Query):
     node = mecab.parseToNode(text)
 
     wakati = []
-    mecabWordCounter = MecabWordWrapper()
+    mecabSentence = MecabSentence()
     while node:
         if node.surface != "":
             wakati.append(node.surface)
             mecabWord = MecabWord(node.surface)
             mecabWord.parseFeatureString(node.feature)
-            mecabWordCounter.add(mecabWord)
+            mecabSentence.add(mecabWord)
         node = node.next
 
     if useFilter:
-        mecabWordCounter.filter(wordClasses)
+        mecabSentence.filter(wordClasses)
 
-    mecabWords = mecabWordCounter.sort()
+    mecabWords = mecabSentence.sort()
 
     return {"message": "Hello World!", "mecabWords": mecabWords, "surfaces": wakati}

@@ -28,7 +28,7 @@ class MecabWordWithCounter:
         self.count += 1
 
 
-class MecabWordWrapper:
+class MecabSentence:
     mecabWords: array = []
     wakati: str = ""
 
