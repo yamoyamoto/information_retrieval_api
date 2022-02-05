@@ -38,6 +38,6 @@ def root(query: Query):
     if useFilter:
         mecabSentence.filter(wordClasses)
 
-    mecabWords = mecabSentence.sort()
+    mecabWords = mecabSentence.sortByWordCount()
 
     return {"message": "Hello World!", "mecabWords": mecabWords, "surfaces": wakati}

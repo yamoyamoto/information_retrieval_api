@@ -45,7 +45,7 @@ class MecabSentence:
             self.mecabWords.append(MecabWordWithCounter(newMecabWord))
             self.wakati += newMecabWord.surface
 
-    def sort(self):
+    def sortByWordCount(self):
         return sorted(self.mecabWords, key=lambda x: x.count, reverse=True)
 
     def filter(self, wordClasses: array):
