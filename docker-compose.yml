@@ -10,3 +10,5 @@ services:
     tty: true
     volumes:
       - ./app:/root/app
+    environment:
+      PORT: 80
