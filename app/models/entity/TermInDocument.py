@@ -1,7 +1,6 @@
-from typing import List
 
 
-class Term:
+class TermInDocument:
     def __init__(self, args) -> None:
         self.surface = args["surface"]
         self.documentId = args["document_id"] if "document_id" in args else 0

@@ -2,20 +2,20 @@ import sqlite3
 import os
 from typing import List
 
-from app.models.entity.Term import Term
+from app.models.entity.TermInDocument import TermInDocument
 
 
-class TermRepository:
+class TermInDocumentRepository:
     def __init__(self) -> None:
         pass
 
-    def toObj(self, tuple) -> Term:
-        term = Term(
+    def toObj(self, tuple) -> TermInDocument:
+        term = TermInDocument(
             {"surface": tuple[0], "tf": tuple[1], "document_id": tuple[2], "document_body": tuple
              [3], "df": tuple[4]})
         return term
 
-    def getBySurface(self, surface: str) -> List[Term]:
+    def getBySurface(self, surface: str) -> List[TermInDocument]:
         conn = sqlite3.connect(os.environ["DB_PATH"])
         c = conn.cursor()
         c.execute("""SELECT a.term, a.tf, a.document_id, b.body FROM term_to_document a
