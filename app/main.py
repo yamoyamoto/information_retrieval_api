@@ -5,6 +5,7 @@ import ipadic
 from pydantic import BaseModel
 
 from app.models.entity.Document import Document
+from app.usecase.SearchDocument import SearchDocumentUseCase
 
 
 class Query(BaseModel):
@@ -40,3 +41,18 @@ def root(query: Query):
     mecabWords = document.sortByWordCount()
 
     return {"message": "Hello World!", "morphemes": mecabWords, "surfaces": document.wakati}
+
+
+class SearchQuery(BaseModel):
+    q: str
+
+
+@app.post("/search/tf_idf/")
+def SearchByTfIdf(query: SearchQuery):
+    reqBody = query.dict()
+    q = reqBody["q"]
+
+    usecase = SearchDocumentUseCase()
+
+    result = usecase.byTFIdf(q)
+    return {"result": result}

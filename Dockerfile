@@ -17,4 +17,6 @@ ENV DB_PATH="/app/ir_db.db"
 
 RUN python /app/setup.py && python ./scripts/seed.py
 
-CMD uvicorn main:app --host 0.0.0.0 --port $PORT --reload
+CMD uvicorn main:app --host 0.0.0.0 --port $PORT --reload && \
+  --reload-dir ./usecase --reload-dir ./models/entity --reload-dir ./models/repository && \
+  --reload-include *.py

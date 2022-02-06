@@ -1,4 +1,4 @@
-from app.models.repository.MorphemeRepository import MorphemeRepository
+from app.models.repository.TermRepository import TermRepository
 
 
 def test_save():
