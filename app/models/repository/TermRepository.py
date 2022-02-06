@@ -11,13 +11,15 @@ class TermRepository:
 
     def toObj(self, tuple) -> Term:
         term = Term(
-            {"surface": tuple[0], "tf": tuple[1], "document_id": tuple[2], "df": tuple[3]})
+            {"surface": tuple[0], "tf": tuple[1], "document_id": tuple[2], "document_body": tuple
+             [3], "df": tuple[4]})
         return term
 
     def getBySurface(self, surface: str) -> List[Term]:
         conn = sqlite3.connect(os.environ["DB_PATH"])
         c = conn.cursor()
-        c.execute("""SELECT term, tf, document_id FROM term_to_document
+        c.execute("""SELECT a.term, a.tf, a.document_id, b.body FROM term_to_document a
+            LEFT JOIN document b ON a.document_id=b.id
             WHERE term=? ;""", (surface,))
         tuples = c.fetchall()
 
