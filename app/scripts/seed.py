@@ -10,7 +10,6 @@ c = conn.cursor()
 
 for document in documents:
     for morphemeCounter in document.morphemes:
-        # insert into term and document_to_term
         c.execute("INSERT INTO term_to_document (term, word_class, document_id, tf) VALUES (?, ?, ?, ?);",
                   (
                       morphemeCounter.morpheme.surface,
