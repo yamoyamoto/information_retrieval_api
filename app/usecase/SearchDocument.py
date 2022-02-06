@@ -1,6 +1,6 @@
 from typing import List
 from app.models.entity.TermInDocument import TermInDocument
-from app.models.repository.TermRepository import TermRepository
+from app.models.repository.TermRepository import TermInDocumentRepository
 
 
 class SearchDocumentUseCase:
@@ -8,7 +8,7 @@ class SearchDocumentUseCase:
         pass
 
     def byTFIdf(self, query: str) -> List[TermInDocument]:
-        repo = TermRepository()
+        repo = TermInDocumentRepository()
         terms = repo.getBySurface(query)
 
         return sorted(terms, key=lambda x: x.tfIdf)
