@@ -15,6 +15,6 @@ WORKDIR /app/app
 
 ENV DB_PATH="/app/ir_db.db"
 
-RUN python /app/setup.py && python /app/scripts/seed.py
+RUN python /app/setup.py && python ./scripts/seed.py
 
 CMD uvicorn main:app --host 0.0.0.0 --port $PORT --reload
