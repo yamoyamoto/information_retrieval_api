@@ -9,6 +9,7 @@ conn = sqlite3.connect(os.environ["DB_PATH"])
 c = conn.cursor()
 
 for document in documents:
+    document.parseFromString()
     for morphemeCounter in document.morphemes:
         c.execute("INSERT INTO term_to_document (term, word_class, document_id, tf) VALUES (?, ?, ?, ?);",
                   (
