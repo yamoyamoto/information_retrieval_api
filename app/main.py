@@ -1,11 +1,11 @@
-from array import array
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import MeCab
 import ipadic
 from pydantic import BaseModel
 
-from models import Morpheme, MecabSentence
+from app.models.entity.Morpheme import Morpheme
+from app.models.entity.Document import Document
 
 
 class Query(BaseModel):
@@ -32,22 +32,12 @@ def root(query: Query):
     useFilter = reqBody["use_word_class_filter"]
     wordClasses = reqBody["word_classes"]
 
-    mecab = MeCab.Tagger(ipadic.MECAB_ARGS)
-    node = mecab.parseToNode(text)
-
     wakati = []
-    mecabSentence = MecabSentence()
-    while node:
-        if node.surface != "":
-            wakati.append(node.surface)
-            mecabWord = Morpheme(node.surface)
-            mecabWord.parseFeatureString(node.feature)
-            mecabSentence.add(mecabWord)
-        node = node.next
+    document = Document()
 
     if useFilter:
-        mecabSentence.filterByWordClasses(wordClasses)
+        document.filterByWordClasses(wordClasses)
 
-    mecabWords = mecabSentence.sortByWordCount()
+    mecabWords = document.sortByWordCount()
 
     return {"message": "Hello World!", "morphemes": mecabWords, "surfaces": wakati}
