@@ -10,6 +10,5 @@ class SearchDocumentUseCase:
     def byTFIdf(self, query: str) -> List[Term]:
         repo = TermRepository()
         terms = repo.getBySurface(query)
-        print("aa")
 
         return sorted(terms, key=lambda x: x.tfIdf)
