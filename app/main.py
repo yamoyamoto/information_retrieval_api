@@ -4,12 +4,11 @@ import MeCab
 import ipadic
 from pydantic import BaseModel
 
-from app.models.entity.Morpheme import Morpheme
 from app.models.entity.Document import Document
 
 
 class Query(BaseModel):
-    text: str = None
+    text: str
     use_word_class_filter: bool = False
     word_classes = []
 
@@ -32,12 +31,12 @@ def root(query: Query):
     useFilter = reqBody["use_word_class_filter"]
     wordClasses = reqBody["word_classes"]
 
-    wakati = []
-    document = Document()
+    document = Document(text)
+    document.parseFromString()
 
     if useFilter:
         document.filterByWordClasses(wordClasses)
 
     mecabWords = document.sortByWordCount()
 
-    return {"message": "Hello World!", "morphemes": mecabWords, "surfaces": wakati}
+    return {"message": "Hello World!", "morphemes": mecabWords, "surfaces": document.wakati}

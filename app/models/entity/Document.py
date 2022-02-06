@@ -23,15 +23,14 @@ def parse(document: str):
 
 class Document:
     id: int
-    body: str = ""
-    morphemes: List[MorphemeCounter] = []
-    wakati: List[str] = []
-    length: int
+    body: str
+    morphemes: List[MorphemeCounter]
+    wakati: List[str]
 
     def __init__(self, body) -> None:
         self.morphemes = []
         self.body = body
-        self.parseFromString(body)
+        self.wakati = []
 
     def getBody(self):
         return self.body
@@ -39,11 +38,13 @@ class Document:
     def setId(self, id: int):
         self.id = id
 
-    def parseFromString(self, body: str):
-        result = parse(body)
+    def parseFromString(self):
+        result = parse(self.body)
         for one in result:
-            self.wakati += one["surface"]
+            print(one)
+            self.wakati.append(one["surface"])
             self.add(Morpheme(one))
+        return self
 
     def add(self, newMorpheme: Morpheme) -> None:
         flag = False
@@ -53,7 +54,6 @@ class Document:
                 flag = True
         if not flag:
             self.morphemes.append(MorphemeCounter(newMorpheme))
-            self.wakati.append(newMorpheme.surface)
 
     def sortByWordCount(self):
         return sorted(self.morphemes, key=lambda x: x.count, reverse=True)
