@@ -1,7 +1,5 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import MeCab
-import ipadic
 from pydantic import BaseModel
 
 from app.models.entity.Document import Document
