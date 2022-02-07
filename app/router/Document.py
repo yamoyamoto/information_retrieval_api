@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from app.usecase.document.SearchDocument import SearchDocumentAction
+from app.usecase.document.Search import SearchDocumentAction
 
 router = APIRouter(
     prefix="/document"
