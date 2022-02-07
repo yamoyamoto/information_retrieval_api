@@ -11,18 +11,18 @@ class Term:
         self.tf = args["tf"]
         self.df = args["df"]
 
-        self.calcIdf()
-        self.calcTfIdf()
+        self.__calcIdf()
+        self.__calcTfIdf()
 
     def createDocument(self, body, id=False):
         self.document = Document(body).parseFromString()
         if id:
             self.document.setId(id)
 
-    def calcTfIdf(self):
+    def __calcTfIdf(self):
         self.tfIdf = self.tf * self.idf
 
-    def calcIdf(self):
+    def __calcIdf(self):
         if self.df == 0:
             self.idf = INF
         else:
