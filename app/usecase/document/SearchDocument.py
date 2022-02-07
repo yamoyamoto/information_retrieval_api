@@ -3,7 +3,7 @@ from app.models.entity.TermInDocument import TermInDocument
 from app.models.repository.TermRepository import TermInDocumentRepository
 
 
-class SearchDocumentUseCase:
+class SearchDocumentAction:
     def __init__(self) -> None:
         pass
 
