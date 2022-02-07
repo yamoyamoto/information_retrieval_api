@@ -2,7 +2,7 @@ from app.models.entity.Document import Document
 import math
 
 
-class TermInDocument:
+class Term:
     def __init__(self, args) -> None:
         self.surface = args["surface"]
 
