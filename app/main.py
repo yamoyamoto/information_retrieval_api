@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from app.models.entity.Document import Document
-from app.router import Document
+from app.router import Document as DocumentRouter
 
 
 class Query(BaseModel):
@@ -13,7 +13,7 @@ class Query(BaseModel):
 
 
 app = FastAPI()
-app.include_router(Document.router)
+app.include_router(DocumentRouter.router)
 
 
 app.add_middleware(
