@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 from app.models.entity.Document import Document
 from app.router import Document as DocumentRouter
+from usecase.MiniSearchEngine import MiniSearchEngineAction
 
 
 class Query(BaseModel):
@@ -41,3 +42,10 @@ def root(query: Query):
     mecabWords = document.sortByWordCount()
 
     return {"message": "Hello World!", "morphemes": mecabWords, "surfaces": document.wakati}
+
+
+@app.get("/search/")
+def search(q: str, start_index: str):
+    action = MiniSearchEngineAction()
+    items = action.Search(q, start_index)
+    return items
