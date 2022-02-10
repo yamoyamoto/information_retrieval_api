@@ -44,7 +44,7 @@ def root(query: Query):
     return {"message": "Hello World!", "morphemes": mecabWords, "surfaces": document.wakati}
 
 
-@app.get("/search/")
+@app.post("/search/")
 def search(q: str, start_index: str):
     action = MiniSearchEngineAction()
     items = action.Search(q, start_index)
