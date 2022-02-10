@@ -8,7 +8,7 @@ RUN apt-get update && \
 #   cd mecab-ipadic-neologd && \
 #   bin/install-mecab-ipadic-neologd -y
 
-RUN python -m pip install mecab-python3 ipadic sqlalchemy pytest
+RUN python -m pip install mecab-python3 ipadic sqlalchemy pytest google-api-python-client
 
 COPY . /app/
 WORKDIR /app/app
