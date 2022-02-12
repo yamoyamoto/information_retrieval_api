@@ -18,7 +18,7 @@ class Morpheme:
 
     def parseFeatureString(self):
         arr = self.featureString.split(",")
-        self.wordClass = arr[1]
+        self.wordClass = arr[0]
 
 
 class MorphemeCounter:
