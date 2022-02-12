@@ -2,9 +2,6 @@ from cgitb import reset
 
 # "-d /usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd"
 
-# Counterの排除 → WrapperにCount情報をもたせる
-# 永続化方法の検討(Documentと突き合わせて保存する必要がある)
-
 
 class Morpheme:
     featureString: str
