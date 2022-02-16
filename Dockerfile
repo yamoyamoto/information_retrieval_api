@@ -16,6 +16,6 @@ WORKDIR /app/app
 ENV DB_PATH="/app/ir_db.db"
 ENV FORWARDED_ALLOW_IPS="*"
 
-RUN python /app/setup.py && python ./scripts/seed.py
+RUN python /app/setup.py && python ./scripts/add_document.py && python ./scripts/seed.py
 
 CMD /start-reload.sh
