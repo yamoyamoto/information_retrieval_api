@@ -1,5 +1,6 @@
 from app.models.entity.Document import Document
 import math
+from decimal import Decimal, ROUND_HALF_UP
 
 INF = 100000
 
@@ -27,3 +28,5 @@ class Term:
             self.idf = INF
         else:
             self.idf = math.log(len(self.document.wakati)/self.df)
+            self.idf = Decimal(str(self.idf)).quantize(
+                Decimal("0.001"), rounding=ROUND_HALF_UP)
