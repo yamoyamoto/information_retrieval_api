@@ -11,4 +11,4 @@ class SearchDocumentAction:
         repo = TermRepository()
         terms = repo.getBySurface(query)
 
-        return sorted(terms, key=lambda x: x.tfIdf)
+        return sorted(terms, key=lambda x: x.tfIdf, reverse=True)
