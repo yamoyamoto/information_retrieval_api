@@ -2,7 +2,7 @@ import sqlite3
 import os
 import json
 
-json_open = open("../document_data/corona.json", "r")
+json_open = open("/app/app/document_data/corona.json", "r")
 json_load = json.load(json_open)
 data = json_load["data"]
 
