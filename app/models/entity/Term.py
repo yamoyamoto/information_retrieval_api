@@ -23,7 +23,7 @@ class Term:
             self.document.setId(id)
 
     def __calcTf(self):
-        self.tf = self.tf / self.N
+        self.tf = Decimal(self.tf / self.N)
 
     def __calcTfIdf(self):
         self.tfIdf = self.tf * self.idf
