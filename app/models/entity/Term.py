@@ -13,6 +13,7 @@ class Term:
         self.df = args["df"]
         self.N = args["N"]
 
+        self.__calcTf()
         self.__calcIdf()
         self.__calcTfIdf()
 
@@ -20,6 +21,9 @@ class Term:
         self.document = Document(body).parseFromString()
         if id:
             self.document.setId(id)
+
+    def __calcTf(self):
+        self.tf = self.tf / self.N
 
     def __calcTfIdf(self):
         self.tfIdf = self.tf * self.idf
