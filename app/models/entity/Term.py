@@ -11,6 +11,7 @@ class Term:
         self.createDocument(args["document_body"], args["document_id"])
         self.tf = args["tf"]
         self.df = args["df"]
+        self.N = args["N"]
 
         self.__calcIdf()
         self.__calcTfIdf()
@@ -27,6 +28,6 @@ class Term:
         if self.df == 0:
             self.idf = INF
         else:
-            self.idf = math.log(len(self.document.wakati)/self.df)
+            self.idf = math.log(self.N/self.df)
             self.idf = Decimal(str(self.idf)).quantize(
                 Decimal("0.001"), rounding=ROUND_HALF_UP)
