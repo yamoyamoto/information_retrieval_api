@@ -11,7 +11,6 @@ class Term:
         self.createDocument(args["document_body"], args["document_id"])
         self.tf = args["tf"]
         self.df = args["df"]
-        self.N = args["N"]
 
         self.__calcTf()
         self.__calcIdf()
@@ -19,6 +18,7 @@ class Term:
 
     def createDocument(self, body, id=False):
         self.document = Document(body).parseFromString()
+        self.N = len(self.document.wakati)
         if id:
             self.document.setId(id)
 

@@ -1,3 +1,4 @@
+from decimal import Decimal
 from app.models.entity.Document import Document
 
 from app.models.entity.Term import Term
@@ -9,6 +10,7 @@ args = {
     "document_id": 1,
     "tf": 1,
     "df": 7,
+    "N": 7,
 }
 
 
@@ -17,9 +19,11 @@ def test_Initialize():
     term = Term(args)
     assert term.surface == "川口"
     assert isinstance(term.document, Document)
-    assert term.tf == 1
+
+    # tf / N
+    assert term.tf == Decimal(1 / 7)
+
     assert term.df == 7
-    # log(7/7)
     assert term.tfIdf == 0
 
 
@@ -30,4 +34,3 @@ def test_InitializeWhenInvalidDf():
 
     term = Term(args)
     assert term.idf == 100000
-    assert term.tfIdf == 200000

@@ -17,9 +17,5 @@ c.execute(
     "CREATE TABLE term_to_document (id INTEGER PRIMARY KEY AUTOINCREMENT, term TEXT, word_class TEXT, document_id int, tf int, tf_idf int);"
 )
 
-c.execute(
-    "INSERT INTO document (id, body) VALUES (1, '川口友也は大阪生まれ、大阪出身です。');"
-)
-
 conn.commit()
 conn.close()

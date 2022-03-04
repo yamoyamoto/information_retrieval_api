@@ -41,7 +41,6 @@ class Document:
     def parseFromString(self):
         result = parse(self.body)
         for one in result:
-            print(one)
             self.wakati.append(one["surface"])
             self.add(Morpheme(one))
         return self
