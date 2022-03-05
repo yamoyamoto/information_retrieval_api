@@ -12,7 +12,7 @@ class TermRepository:
     def toObj(self, tuple) -> Term:
         term = Term(
             {"surface": tuple[0], "tf": tuple[1], "document_id": tuple[2], "document_body": tuple
-             [3], "df": tuple[4], "N": tuple[5], })
+             [3], "df": tuple[4], "document_count": tuple[5], })
         return term
 
     def getBySurface(self, surface: str) -> List[Term]:
@@ -27,7 +27,7 @@ class TermRepository:
             WHERE term=? GROUP BY term;""", (surface,))
         statistics = c.fetchone()
 
-        c.execute("SELECT COUNT(*) N FROM document")
+        c.execute("SELECT COUNT(*) as all_document_count FROM document")
         all_document_count = c.fetchone()
 
         conn.commit()
