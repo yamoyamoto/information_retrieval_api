@@ -6,9 +6,8 @@ services:
     container_name: 'python3'
     ports:
       - "80:80"
-    working_dir: '/root/code'
     tty: true
     volumes:
-      - ./:/root/code
+      - ./:/code
     environment:
       PORT: 80
