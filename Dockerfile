@@ -19,4 +19,4 @@ RUN python ./setup.py && python ./app/scripts/add_document.py && python ./app/sc
 RUN adduser myuser
 USER myuser
 
-CMD ["uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "80", "--forwarded-allow-ips", "*"]
+CMD ["uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000", "--forwarded-allow-ips", "*"]
