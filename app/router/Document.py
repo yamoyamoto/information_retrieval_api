@@ -27,6 +27,11 @@ def searchByTfIdf(query: SearchQuery):
     return {"result": result}
 
 
-@router.get("/search/cosine")
-def searchByCosine():
-    pass
+@router.post("/search/cosine")
+def searchByCosine(query: SearchQuery):
+    reqBody = query.dict()
+    q = reqBody["q"]
+
+    actionObj = SearchDocumentAction()
+    result = actionObj.byCosine(q)
+    return {"result": result}

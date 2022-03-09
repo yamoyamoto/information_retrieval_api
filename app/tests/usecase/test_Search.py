@@ -5,7 +5,6 @@ import os
 import math
 
 from app.usecase.document.Search import SearchDocumentAction
-from app.models.repository.DocumentRepository import DocumentRepository
 
 
 @pytest.fixture

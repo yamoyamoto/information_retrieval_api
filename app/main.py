@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 from app.models.entity.Document import Document
 from app.router import Document as DocumentRouter
-from usecase.MiniSearchEngine import MiniSearchEngineAction
+from app.usecase.MiniSearchEngine import MiniSearchEngineAction
 
 
 class Query(BaseModel):

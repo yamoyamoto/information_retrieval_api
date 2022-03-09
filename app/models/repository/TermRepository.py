@@ -2,7 +2,7 @@ import sqlite3
 import os
 from typing import List
 
-from app.models.entity.Term import Term
+from app.models.entity.Term import Term, TermCorrection
 
 
 class TermRepository:
@@ -34,3 +34,7 @@ class TermRepository:
         conn.close()
 
         return list(map(lambda x: self.toObj(x+statistics+all_document_count), tuples))
+
+
+def toTermCorrection(terms: List[Term]) -> TermCorrection:
+    return TermCorrection(terms)
