@@ -1,7 +1,5 @@
 FROM python:3.9
 
-USER root
-
 RUN apt-get update && \
   apt-get install -y curl git man unzip vim wget sudo file sqlite3
 
@@ -18,5 +16,7 @@ ENV PYTHONPATH "/code/"
 
 RUN python ./setup.py && python ./app/scripts/add_document.py && python ./app/scripts/seed.py
 
+RUN adduser myuser
+USER myuser
 
 CMD ["uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "80", "--forwarded-allow-ips", "*"]
