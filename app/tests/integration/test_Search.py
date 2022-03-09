@@ -83,7 +83,7 @@ def testTfIdf(pre_function):
     result = action.byTFIdf("大阪")
     assert len(result) == 1
     result[0].document.body == "川口友也は大阪生まれ、大阪出身です。"
-    idf_expected = Decimal(str(math.log(Decimal(3/2)))).quantize(
+    idf_expected = Decimal(str(math.log(Decimal(3/1)))).quantize(
         Decimal("0.001"), rounding=ROUND_HALF_UP)
 
     assert result[0].tf == Decimal(2/10)

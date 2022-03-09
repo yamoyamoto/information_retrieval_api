@@ -23,7 +23,7 @@ class TermRepository:
             WHERE term=? ;""", (surface,))
         tuples = c.fetchall()
 
-        c.execute("""SELECT SUM(tf) as df FROM term_to_document
+        c.execute("""SELECT COUNT(*) as df FROM term_to_document
             WHERE term=? GROUP BY term;""", (surface,))
         statistics = c.fetchone()
 
