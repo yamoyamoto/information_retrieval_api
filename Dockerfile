@@ -16,4 +16,6 @@ ENV PYTHONPATH "/code/"
 
 RUN python ./setup.py && python ./app/scripts/add_document.py && python ./app/scripts/seed.py
 
-CMD ["sudo", "uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "80", "--forwarded-allow-ips", "*"]
+USER root
+
+CMD ["uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "80", "--forwarded-allow-ips", "*"]
