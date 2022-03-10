@@ -35,7 +35,7 @@ def pre_function():
     )
     conn.commit()
     conn.close()
-    exec(open("/app/app/scripts/seed.py").read())
+    exec(open("/code/app/scripts/seed.py").read())
 
     yield "Tear Down"
 

@@ -11,12 +11,8 @@ WORKDIR /code
 RUN python -m pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 ENV DB_PATH="/code/ir_db.db"
-ENV FORWARDED_ALLOW_IPS="*"
 ENV PYTHONPATH "/code/"
 
-RUN python ./setup.py && python ./app/scripts/add_document.py && python ./app/scripts/seed.py
-
-RUN adduser myuser
-USER myuser
+RUN python /code/setup.py && python /code/app/scripts/add_document.py && python /code/app/scripts/seed.py
 
 CMD uvicorn app.main:app --reload --host 0.0.0.0 --port $PORT --forwarded-allow-ips '*'

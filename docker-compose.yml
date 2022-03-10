@@ -8,6 +8,6 @@ services:
       - "80:80"
     tty: true
     volumes:
-      - ./:/code
+      - ./app:/code/app
     environment:
       PORT: 80

@@ -16,9 +16,17 @@ for document in documents:
                       morphemeCounter.morpheme.surface,
                       morphemeCounter.morpheme.wordClass,
                       document.id,
-                      morphemeCounter.count,
+                      morphemeCounter.count / len(document.morphemes),
                   )
                   )
+
+c.execute("""UPDATE term_to_document
+    SET df=b.df
+    FROM (
+        SELECT term, COUNT(*) as df FROM term_to_document GROUP BY term
+    ) as b
+    WHERE term_to_document.term=b.term;
+    """)
 
 conn.commit()
 conn.close()

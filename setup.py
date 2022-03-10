@@ -14,7 +14,7 @@ c.execute(
 # )
 
 c.execute(
-    "CREATE TABLE term_to_document (id INTEGER PRIMARY KEY AUTOINCREMENT, term TEXT, word_class TEXT, document_id int, tf int, tf_idf int);"
+    "CREATE TABLE term_to_document (id INTEGER PRIMARY KEY AUTOINCREMENT, term TEXT, word_class TEXT, document_id int, tf int, df int, tf_idf int);"
 )
 
 conn.commit()
