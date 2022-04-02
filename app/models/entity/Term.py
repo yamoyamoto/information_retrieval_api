@@ -1,5 +1,4 @@
 from app.models.entity.Document import Document
-import math
 from decimal import Decimal, ROUND_HALF_UP
 from typing import List
 
@@ -8,15 +7,14 @@ INF = 100000
 
 class Term:
     def __init__(self, args) -> None:
+        # print(args)
+        self.id = args["id"]
         self.surface = args["surface"]
         self.createDocument(args["document_body"], args["document_id"])
         self.tf = args["tf"]
         self.df = args["df"]
+        self.tfIdf = args["tf_idf"]
         self.document_count = args["document_count"]
-
-        self.__calcTf()
-        self.__calcIdf()
-        self.__calcTfIdf()
 
     def createDocument(self, body, id=False):
         self.document = Document(body).parseFromString()
@@ -32,20 +30,6 @@ class Term:
         self.cosine = cosine
         return self
 
-    def __calcTf(self):
-        self.tf = Decimal(self.tf / self.N)
-
-    def __calcTfIdf(self):
-        self.tfIdf = self.tf * self.idf
-
-    def __calcIdf(self):
-        if self.df == 0:
-            self.idf = INF
-        else:
-            self.idf = math.log(self.document_count/self.df)
-            self.idf = Decimal(str(self.idf)).quantize(
-                Decimal("0.001"), rounding=ROUND_HALF_UP)
-
 
 class TermCorrection:
     terms: List[Term]
@@ -54,20 +38,17 @@ class TermCorrection:
         self.terms = terms
         pass
 
-    def calcCosine(self) -> List[Term]:
+    def calcNorm(self):
         norm = 0
-        returnTerms = []
         for term in self.terms:
-            norm += term.idf
-            # queryを分解しないのでtfが内積になる
-            returnTerms.append(term.setInnerProduct(term.tf))
+            norm += term.idf ** 2
         if norm <= 0:
             raise Exception("norm must be more than 0")
-        return self.__setCosineToTerms(norm)
+        return norm
 
-    def __setCosineToTerms(self, norm):
+    def calcCosine(self) -> List[Term]:
         returnTerms = []
         for term in self.terms:
-            cosine = term.innerProduct / Decimal(math.sqrt(norm))
-            returnTerms.append(term.setCosine(cosine))
-        return returnTerms
+            # queryを分解しないのでtf-idfが内積になる
+            returnTerms.append(term.setInnerProduct(term.tfIdf))
+        return self

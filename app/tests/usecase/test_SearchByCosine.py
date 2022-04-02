@@ -55,31 +55,35 @@ def pre_function():
     conn.close()
 
 
-def testTfIdf(pre_function):
+def testCosine(pre_function):
     action = SearchDocumentAction()
-    result = action.byTFIdf("揚げ")
+    result = action.byCosine("揚げ")
 
     assert len(result) == 1
-    # 川口 友也 は 唐 揚げ が 大好き です 。
-    idf_expected = math.log(3/1)
-    assert result[0].tf == Decimal(1/9)
-    assert result[0].tfIdf == 1/9 * idf_expected
+    assert result[0]["term"].document.body == "川口友也は唐揚げが大好きです。"
 
-    result = action.byTFIdf("川口")
-    assert len(result) == 3
-    assert result[0].document.body == "川口友也は大阪生まれ、大阪出身です。"
-    assert result[1].document.body == "川口友也は唐揚げが大好きです。"
-    assert result[2].document.body == "川口友也は大阪市立大学に通っています。"
+    tfIdfOfQuery = 1/9 * math.log(3/1)
+    norm = 0
+    # 川口
+    norm += pow(1/9 * math.log(3/3), 2)
+    # 友也
+    norm += pow(1/9 * math.log(3/3), 2)
+    # は
+    norm += pow(1/9 * math.log(3/3), 2)
+    # 唐
+    norm += pow(1/9 * math.log(3/1), 2)
+    # 揚げ
+    norm += pow(1/9 * math.log(3/1), 2)
+    # が
+    norm += pow(1/9 * math.log(3/1), 2)
+    # 大好き
+    norm += pow(1/9 * math.log(3/1), 2)
+    # です
+    norm += pow(1/9 * math.log(3/3), 2)
+    # 。
+    norm += pow(1/9 * math.log(3/3), 2)
 
-    idf_expected = Decimal(str(math.log(Decimal(3/3)))).quantize(
-        Decimal("0.001"), rounding=ROUND_HALF_UP)
-    assert result[2].tf == Decimal(1/10)
-    assert result[2].tfIdf == Decimal(1/10) * idf_expected
-
-    result = action.byTFIdf("大阪")
-    assert len(result) == 1
-    result[0].document.body == "川口友也は大阪生まれ、大阪出身です。"
-    idf_expected = math.log(3/1)
-
-    assert result[0].tf == 2/9
-    assert result[0].tfIdf == 2/9 * idf_expected
+    print("tfIdfOfQuery", tfIdfOfQuery)
+    print("Decimal(math.sqrt(norm))", math.sqrt(norm))
+    cosine_expected = tfIdfOfQuery/math.sqrt(norm)
+    assert result[0]["cosine"] - cosine_expected < 0.01

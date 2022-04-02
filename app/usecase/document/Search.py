@@ -1,6 +1,8 @@
+from decimal import Decimal
+import math
 from typing import List
 from app.models.entity.Term import Term
-from app.models.repository.TermRepository import TermRepository, toTermCorrection
+from app.models.repository.TermRepository import TermRepository
 
 
 class SearchDocumentAction:
@@ -13,10 +15,22 @@ class SearchDocumentAction:
 
         return sorted(terms, key=lambda x: x.tfIdf, reverse=True)
 
-    def byCosine(self, query: str) -> List[Term]:
+    def byCosine(self, query: str):
         repo = TermRepository()
         terms = repo.getBySurface(query)
         if len(terms) == 0:
             return []
-        terms = toTermCorrection(terms).calcCosine()
-        return sorted(terms, key=lambda x: x.cosine, reverse=True)
+
+        termsWithCosine = []
+
+        for term in terms:
+            norm = repo.fetchNormById(term.document.id)
+            termsWithCosine.append({
+                "term": term,
+                "cosine": term.tfIdf / math.sqrt(norm),
+            })
+
+        termsWithCosine = sorted(
+            termsWithCosine, key=lambda x: x["cosine"], reverse=True)
+
+        return termsWithCosine
