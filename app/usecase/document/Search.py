@@ -21,16 +21,14 @@ class SearchDocumentAction:
         if len(terms) == 0:
             return []
 
-        termsWithCosine = []
+        termsWithCosine: List[Term] = []
 
         for term in terms:
             norm = repo.fetchNormById(term.document.id)
-            termsWithCosine.append({
-                "term": term,
-                "cosine": term.tfIdf / math.sqrt(norm),
-            })
+            cosine = term.tfIdf / math.sqrt(norm)
+            termsWithCosine.append(term.setCosine(cosine))
 
         termsWithCosine = sorted(
-            termsWithCosine, key=lambda x: x["cosine"], reverse=True)
+            termsWithCosine, key=lambda x: x.cosine, reverse=True)
 
         return termsWithCosine

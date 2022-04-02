@@ -60,7 +60,7 @@ def testCosine(pre_function):
     result = action.byCosine("揚げ")
 
     assert len(result) == 1
-    assert result[0]["term"].document.body == "川口友也は唐揚げが大好きです。"
+    assert result[0].document.body == "川口友也は唐揚げが大好きです。"
 
     tfIdfOfQuery = 1/9 * math.log(3/1)
     norm = 0
@@ -83,7 +83,5 @@ def testCosine(pre_function):
     # 。
     norm += pow(1/9 * math.log(3/3), 2)
 
-    print("tfIdfOfQuery", tfIdfOfQuery)
-    print("Decimal(math.sqrt(norm))", math.sqrt(norm))
     cosine_expected = tfIdfOfQuery/math.sqrt(norm)
-    assert result[0]["cosine"] - cosine_expected < 0.01
+    assert result[0].cosine - cosine_expected < 0.01
