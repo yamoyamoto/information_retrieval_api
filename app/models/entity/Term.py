@@ -8,13 +8,13 @@ class Term:
     def __init__(self, args) -> None:
         self.id = args["id"]
         self.surface = args["surface"]
-        self.createDocument(args["document_body"], args["document_id"])
+        self.buildDocument(args["document_body"], args["document_id"])
         self.tf = args["tf"]
         self.df = args["df"]
         self.tfIdf = args["tf_idf"]
         self.document_count = args["document_count"]
 
-    def createDocument(self, body, id=False):
+    def buildDocument(self, body, id=False):
         self.document = Document(body).parseFromString()
         self.N = len(self.document.wakati)
         if id:
