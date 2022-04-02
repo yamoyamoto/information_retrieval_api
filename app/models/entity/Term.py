@@ -6,7 +6,6 @@ INF = 100000
 
 class Term:
     def __init__(self, args) -> None:
-        # print(args)
         self.id = args["id"]
         self.surface = args["surface"]
         self.createDocument(args["document_body"], args["document_id"])
