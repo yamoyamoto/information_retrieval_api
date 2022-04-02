@@ -1,8 +1,6 @@
 import sqlite3
 import os
 from typing import List
-from app.models.entity.Document import Document
-
 from app.models.entity.Term import Term, TermCorrection
 
 

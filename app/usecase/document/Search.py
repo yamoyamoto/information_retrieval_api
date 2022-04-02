@@ -1,4 +1,3 @@
-from decimal import Decimal
 import math
 from typing import List
 from app.models.entity.Term import Term
