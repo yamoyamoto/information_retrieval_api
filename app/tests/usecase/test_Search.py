@@ -1,4 +1,3 @@
-from decimal import Decimal, ROUND_HALF_UP
 import sqlite3
 import pytest
 import os
@@ -62,7 +61,7 @@ def testTfIdf(pre_function):
     assert len(result) == 1
     # 川口 友也 は 唐 揚げ が 大好き です 。
     idf_expected = math.log(3/1)
-    assert result[0].tf == Decimal(1/9)
+    assert result[0].tf == 1/9
     assert result[0].tfIdf == 1/9 * idf_expected
 
     result = action.byTFIdf("川口")
@@ -71,10 +70,9 @@ def testTfIdf(pre_function):
     assert result[1].document.body == "川口友也は唐揚げが大好きです。"
     assert result[2].document.body == "川口友也は大阪市立大学に通っています。"
 
-    idf_expected = Decimal(str(math.log(Decimal(3/3)))).quantize(
-        Decimal("0.001"), rounding=ROUND_HALF_UP)
-    assert result[2].tf == Decimal(1/10)
-    assert result[2].tfIdf == Decimal(1/10) * idf_expected
+    idf_expected = math.log(3/3)
+    assert result[2].tf == 1/10
+    assert result[2].tfIdf == 1/10 * idf_expected
 
     result = action.byTFIdf("大阪")
     assert len(result) == 1
