@@ -61,7 +61,7 @@ def testCosine(pre_function):
     assert len(result) == 1
     assert result[0].document.body == "川口友也は唐揚げが大好きです。"
 
-    tfIdfOfQuery = 1/9 * math.log(3/1)
+    tfIdfOfQueryWord = 1/9 * math.log(3/1)
     norm = 0
     # 川口
     norm += pow(1/9 * math.log(3/3), 2)
@@ -78,9 +78,41 @@ def testCosine(pre_function):
     # 大好き
     norm += pow(1/9 * math.log(3/1), 2)
     # です
-    norm += pow(1/9 * math.log(3/3), 2)
+    norm += pow(1/9 * math.log(3/2), 2)
     # 。
     norm += pow(1/9 * math.log(3/3), 2)
 
-    cosine_expected = tfIdfOfQuery/math.sqrt(norm)
-    assert result[0].cosine - cosine_expected < 0.01
+    cosine_expected = tfIdfOfQueryWord/math.sqrt(norm)
+    assert abs(result[0].cosine - cosine_expected) < pow(10, -5)
+
+    # 順番の検証
+    result = action.byCosine("です")
+
+    assert len(result) == 2
+    assert result[0].document.body == "川口友也は唐揚げが大好きです。"
+    assert result[1].document.body == "川口友也は大阪生まれ、大阪出身です。"
+
+    tfIdfOfQueryWord = 1/10 * math.log(3/2)
+    norm = 0
+    # 川口
+    norm += pow(1/10 * math.log(3/3), 2)
+    # 友也
+    norm += pow(1/10 * math.log(3/3), 2)
+    # は
+    norm += pow(1/10 * math.log(3/3), 2)
+    # 大阪
+    norm += pow(2/10 * math.log(3/1), 2)
+    # 生まれ
+    norm += pow(1/10 * math.log(3/1), 2)
+    # 、
+    norm += pow(1/10 * math.log(3/1), 2)
+    # 大阪
+    # 出身
+    norm += pow(1/10 * math.log(3/1), 2)
+    # です
+    norm += pow(1/10 * math.log(3/2), 2)
+    # 。
+    norm += pow(1/10 * math.log(3/3), 2)
+
+    cosine_expected = tfIdfOfQueryWord/math.sqrt(norm)
+    assert abs(result[1].cosine - cosine_expected) < pow(10, -5)
